@@ -68,7 +68,7 @@ return isFull;
       };
       
       
-   // 全屏按钮事件
+   /** 全屏按钮事件 **/
   fullScreenChange(){
   
     // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
@@ -84,10 +84,11 @@ return isFull;
     }
     
     // 全屏按钮的业务逻辑
+    
     dosomething2();
   }
   
-  // 退出全屏的按钮事件
+  /** 退出全屏的按钮事件 **/
   fullScreenChangeEXIT(){
   
     // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
