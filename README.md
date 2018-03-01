@@ -12,37 +12,37 @@ HTML5全屏之后，监听esc按键事件
 网络上提供了以下几种思路：
 
 # 无效的方法一
- window.onkeydown= function(e){
-     let a = 12;
- }
+    window.onkeydown= function(e){
+        let a = 12;
+    }
  
 onkeydown在正常页面点ESC键是可以触发的,但是在全屏之后再点击是没有反应的，据说是浏览器故意这样的。
 
 # 无效的方法二
-window.onresize = function(){
-if(!checkFull()){
-//要执行的动作
-}
-}
+    window.onresize = function(){
+        if(!checkFull()){
+        //要执行的动作
+        }
+    }
 
-function checkFull(){
-var isFull =  document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
+    function checkFull(){
+        var isFull =  document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
 
-//to fix : false || undefined == undefined
-if(isFull === undefined) isFull = false;
-return isFull;
-}
+        //to fix : false || undefined == undefined
+        if(isFull === undefined) isFull = false;
+        return isFull;
+    }
 
 该方法在全屏后，点击ESC键的确可以在onresize事件响应，但问题是：点击全屏和退出全屏按钮也进入到这个方法。
 
 # 无效的方法三
-  document.addEventListener("fullscreenchange", function () {
-    if (document.fullscreenElement != null) {
-      console.info("Went full screen");
-    } else {
-      console.info("Exited full screen");
-    }
-  });
+      document.addEventListener("fullscreenchange", function () {
+        if (document.fullscreenElement != null) {
+          console.info("Went full screen");
+        } else {
+          console.info("Exited full screen");
+        }
+      });
   
   存在的问题同上.
   
@@ -68,41 +68,41 @@ return isFull;
       };
       
       
-   /** 全屏按钮事件 **/
-  fullScreenChange(){
+       /** 全屏按钮事件 **/
+       fullScreenChange(){
   
-    // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
-    
-    this.isClickFullScreenButton = true;
-  
-    let docElm = document.documentElement;
-    if (docElm.requestFullscreen) {
-      docElm.requestFullscreen();
-    }
-    else if (docElm.webkitRequestFullScreen) {
-      docElm.webkitRequestFullScreen();
-    }
-    
-    // 全屏按钮的业务逻辑
-    
-    dosomething2();
-  }
-  
-  /** 退出全屏的按钮事件 **/
-  fullScreenChangeEXIT(){
-  
-    // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
-    
-    this.isClickFullScreenButton = true;
+          //isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
 
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
-    else if (document.webkitCancelFullScreen) {
-      document.webkitCancelFullScreen();
-    }
-    
-    // 退出全屏按钮的业务逻辑
-    
-    dosomething3();
-  }
+          this.isClickFullScreenButton = true;
+
+          let docElm = document.documentElement;
+          if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+          }
+          else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+          }
+
+          // 全屏按钮的业务逻辑
+
+          dosomething2();
+      }
+  
+      /** 退出全屏的按钮事件 **/
+      fullScreenChangeEXIT(){
+
+          // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
+
+          this.isClickFullScreenButton = true;
+
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+          else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+          }
+
+          // 退出全屏按钮的业务逻辑
+
+          dosomething3();
+     }
