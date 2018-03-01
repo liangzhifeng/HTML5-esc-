@@ -49,60 +49,57 @@ onkeydown在正常页面点ESC键是可以触发的,但是在全屏之后再点�
 # 正确的方法
 以下代码是在Angular2项目中，如果是JQuery也是类似的写法。
 
-      let that = this;
-      window.onresize = function(){
+          let that = this;
+          window.onresize = function(){
+
+             // enter是全屏按钮的ID,that.el.nativeElement.querySelector是Angular2中的写法，等价于jQuery中的$('#enter')
+             let fullScreenButton =  that.el.nativeElement.querySelector('#enter');
+             if(fullScreenButton == null){
+                if(that.isClickFullScreenButton == false){//------------------- 这个地方就是捕捉到了全屏时，点键盘ESC键的事件啦！！！
+
+                  // 这里是全屏后，点击键盘ESC键的业务逻辑
+                  dosomething1();
+                }
+              }
+
+              // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏点击时置为true
+
+              that.isClickFullScreenButton = false;
+          };
+
       
-         // enter是全屏按钮的ID,that.el.nativeElement.querySelector是Angular2中的写法，等价于jQuery中的$('#enter')
-         let fullScreenButton =  that.el.nativeElement.querySelector('#enter');
-         if(fullScreenButton == null){
-            if(that.isClickFullScreenButton == false){//------------------- 这个地方就是捕捉到了全屏时，点键盘ESC键的事件啦！！！
-            
-              // 这里是全屏后，点击键盘ESC键的业务逻辑
-              dosomething1();
-            }
-          }
-          
-          // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏点击时置为true
-          
-          that.isClickFullScreenButton = false;
-      };
-      
-      
-       /** 全屏按钮事件 **/
-       fullScreenChange(){
-  
-          //isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
+           /** 全屏按钮事件 **/
+           fullScreenChange(){
 
-          this.isClickFullScreenButton = true;
+              //isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
 
-          let docElm = document.documentElement;
-          if (docElm.requestFullscreen) {
-            docElm.requestFullscreen();
-          }
-          else if (docElm.webkitRequestFullScreen) {
-            docElm.webkitRequestFullScreen();
+              this.isClickFullScreenButton = true;
+
+              let docElm = document.documentElement;
+              if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+              }
+              else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+              }
+
+              // 全屏按钮的业务逻辑
+              dosomething2();
           }
 
-          // 全屏按钮的业务逻辑
+          /** 退出全屏的按钮事件 **/
+          fullScreenChangeEXIT(){
 
-          dosomething2();
-      }
-  
-      /** 退出全屏的按钮事件 **/
-      fullScreenChangeEXIT(){
+              // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
+              this.isClickFullScreenButton = true;
 
-          // isClickFullScreenButton是点击了全屏、退出全屏按钮的标志位，在onresize事件结束的时候置为false,在全屏、退出全屏按钮点击时置为true
+              if (document.exitFullscreen) {
+                document.exitFullscreen();
+              }
+              else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+              }
 
-          this.isClickFullScreenButton = true;
-
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          }
-          else if (document.webkitCancelFullScreen) {
-            document.webkitCancelFullScreen();
-          }
-
-          // 退出全屏按钮的业务逻辑
-
-          dosomething3();
-     }
+              // 退出全屏按钮的业务逻辑
+              dosomething3();
+         }
